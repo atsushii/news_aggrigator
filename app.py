@@ -1,8 +1,14 @@
 from flask import Flask
 import requests
 from bs4 import BeautifulSoup
+from model import News
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///news.db"
+
+db = SQLAlchemy(app)
+db.init_app(app)
 
 
 def scrape_data():
@@ -69,8 +75,6 @@ def scrape_data():
     else:
         data_dict["GOOGLE"] = {"Title": "No title", "URL": "No url"}
 
-    print(data_dict)
-
 
 def validation_data(title, url):
     """
@@ -88,4 +92,19 @@ def validation_data(title, url):
         return False
 
 
-scrape_data()
+def add_data_to_db(news_data):
+      """
+      add latest news data to db
+
+      news_data: dict, latest news data
+      """
+    news_list = News.get_news_data()
+    if news_list:
+        News.delete_news_data(news_list)
+
+    register_news_data(news_data)
+
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(debug=True)
