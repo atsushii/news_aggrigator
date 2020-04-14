@@ -1,4 +1,4 @@
-from __init__ import db
+from . import app, db
 
 
 class News(db.Model):
