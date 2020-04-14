@@ -1,8 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
+from src import app, db
 from ..models import News
 
 
+@app.route('/')
 def scrape_data():
     """
     scraping data from news page
@@ -66,6 +68,7 @@ def scrape_data():
                                soup.find("a", class_="VDXfz")["href"].split(".")[1]}
     else:
         data_dict["GOOGLE"] = {"Title": "No title", "URL": "No url"}
+    print(data_dict)
 
 
 def validation_data(title, url):
@@ -95,3 +98,11 @@ def add_data_to_db(news_data):
         News.delete_news_data(news_list)
 
     News.register_news_data(news_data)
+
+
+scrape_data()
+
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(debug=True)
