@@ -1,4 +1,4 @@
-from . import db
+from app import db
 
 
 class News(db.Model):
@@ -9,10 +9,10 @@ class News(db.Model):
 
     __tablename__ = 'news'
 
-    _id = db.Column(db.Integer, primary_key=True)
-    news_title = db.Column(db.String(10))
-    news_head_line = db.Column(db.String(100))
-    news_url = db.column(db.Text)
+    _id = db.Column("_id", db.Integer, primary_key=True)
+    news_title = db.Column("news_title", db.String(10))
+    news_head_line = db.Column("news_head_line", db.String(100))
+    news_url = db.column("news_url", db.Text)
 
     def __repr__(self):
         return f"News('{self.news_title}', '{self.news_head_line}', '{self.news_url}')"
@@ -28,7 +28,7 @@ class News(db.Model):
 
         if news_data:
             return news_data
-        return []
+        return ""
 
     def delete_news_data(self, data):
         """
