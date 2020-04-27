@@ -1,11 +1,12 @@
-FROM ubuntu:latest
+FROM python:3.6
 
-RUN apt-get update && apt-get install -y python3-pip python3-dev
 
 WORKDIR /app
 COPY . /app
 
-RUN pip3 --no-cache-dir install -r requirements.txt
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
 
 
 
