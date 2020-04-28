@@ -3,19 +3,19 @@ version: "3"
 services:
     web:
         build: .
-        ports: 
+        ports:
             - "5000:5000"
         volumes:
             - "./app:/app"
         tty: true
-        environment: 
+        environment:
             FLASK_APP: run.py
             FLASK_ENV: development
         command: flask run -h 0.0.0.0
-    db:
+    mysql:
         build: ./mysql/
-        volumes: 
+        volumes:
             - ./mysql/mysql_data:/var/lib/mysql
             - ./mysql/sqls:/docker-entrypoint-initdb.d
-        environment: 
-            - MYSQL_ROOT_PASSWORD=password
+        environment:
+            MYSQL_ROOT_PASSWORD: root
