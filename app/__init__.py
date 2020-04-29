@@ -17,7 +17,7 @@ def do():
 
 def start_batch():
     scheduler = BackgroundScheduler(demon=True)
-    scheduler.add_job(do, 'interval', minutes=1)
+    scheduler.add_job(do, 'interval', days=1)
     scheduler.start()
     print("start")
 
